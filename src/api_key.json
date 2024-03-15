@@ -1,0 +1,18 @@
+{
+    "digiflazz" : {
+        "usernamekey" : "nigoduoQXGKg",
+        "productionkey" : "02ebb58c-735e-55d6-842d-914d48706666"
+    },
+    "atlanticpedia" : {
+        "atlantickey" : "5072cd03052489bf2bcd41a62035a73d10e043945e98b3782a1bab15a2c694a9"
+    },
+    "vip_reseller" : {
+        "resellerkey" : "fNmh6PYuhK2B33CxnDQInTwrpNjhIwu57x7E0VhINeG1IWlRmN5TT3FJce3kkFBX",
+        "reselleridkey" : "HktmRLH5"
+    },
+    "apigames" : {
+        "merchantapigames" : "M230305MPYS3644GR",
+        "secretapigames" : "e0f3bf49105ecbde3ed714e192906e4458b5f5b73bded3f74bd7069d7fa60777",
+        "signatureapigames" : "ab758881042aafc6f50fca16c217ad0a"
+    }
+}
