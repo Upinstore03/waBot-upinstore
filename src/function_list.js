@@ -8,7 +8,7 @@ function addResponList(groupID, key, response, isImage, image_url, _db) {
         key: key,
         response: response,
         isImage: isImage,
-        iamage_url: image_url
+        image_url: image_url
     }
     _db.push(obj_add)
     fs.writeFileSync(nama_path_addlist, JSON.stringify(_db, null, 3))

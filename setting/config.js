@@ -3,6 +3,17 @@ const chalk = require("chalk");
 const moment = require("moment-timezone");
 const axios = require("axios");
 
+
+// Mengatur zona waktu menjadi Asia/Makassar
+moment.tz.setDefault('Asia/Makassar');
+
+// Mengatur format tanggal dan waktu
+global.tglserver = moment().locale('id').format('dddd, DD MMMM YYYY');
+global.wktserver = moment().format('HH:mm:ss ([WITA])');
+
+global.tanggalserver = moment().format('DD/MM/YY');
+global.waktuserver = moment().format('HH:mm:ss');
+
 // Website Api
 global.APIs = {
   zenz: "https://api.zahwazein.xyz",
@@ -22,9 +33,6 @@ global.lolkey = "aea6f0ce59590d481b4a636b";
 global.skucodepln = "Your Sku Code";
 global.skucodebpjs = "Your Sku Code";
 global.skucodepdam = "Your Sku Code";
-
-global.tanggalserver = `${moment.tz('Asia/Makassar').format('DD/MM/YY')}`;
-global.waktuserver = `${moment.tz('Asia/Makassar').format('HH:mm:ss')}`; 
 
 let http = require('http')
             http.get({'host': 'api.ipify.org', 'port': 80, 'path': '/'}, function(resp) {

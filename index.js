@@ -212,13 +212,13 @@ function smsg(conn, m, store) {
   return m;
 }
 
-async function startEza() {
-  const { state, saveCreds } = await useMultiFileAuthState(`./${session}`)
+async function startFarhat() {
+  const { state, saveCreds } = await useMultiFileAuthState(`./${session}/session.json`)
   const { version, isLatest } = await fetchLatestBaileysVersion();
   console.log(`using WA v${version.join(".")}, isLatest: ${isLatest}`);
   console.log(
     color(
-      figlet.textSync("Whats Pay", {
+      figlet.textSync("Upin Store", {
         font: "Standard",
         horizontalLayout: "default",
         vertivalLayout: "default",
@@ -596,10 +596,10 @@ async function startEza() {
         process.exit();
       } else if (reason === DisconnectReason.connectionClosed) {
         console.log("Connection closed, reconnecting....");
-        startEza();
+        startFarhat();
       } else if (reason === DisconnectReason.connectionLost) {
         console.log("Connection Lost from Server, reconnecting...");
-        startEza();
+        startFarhat();
       } else if (reason === DisconnectReason.connectionReplaced) {
         console.log("Connection Replaced, Another New Session Opened, Please Close Current Session First");
         process.exit();
@@ -608,13 +608,13 @@ async function startEza() {
         process.exit();
       } else if (reason === DisconnectReason.restartRequired) {
         console.log("Restart Required, Restarting...");
-        startEza();
+        startFarhat();
       } else if (reason === DisconnectReason.timedOut) {
         console.log("Connection TimedOut, Reconnecting...");
-        startEza();
+        startFarhat();
       } else {
         console.log(`Unknown DisconnectReason: ${reason}|${connection}`);
-        startEza();
+        startFarhat();
       }
     } else if (connection === "open") {
       console.log(color(`Whats Payment success connected to ${ipserver}`, "red"));
@@ -934,7 +934,7 @@ async function startEza() {
   return farhat;
 }
 
-startEza();
+startFarhat();
 
 let file = require.resolve(__filename);
 fs.watchFile(file, () => {

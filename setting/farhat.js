@@ -28,6 +28,8 @@ const isBanned = JSON.parse(fs.readFileSync('./src/banned.json'))
 const PathAuto = "./src/depo/"
 const { farhatcekallid } = require("../function/cekallid")
 const { scrapHarga } = require("../function/scrapHargaIndo");
+const { list1000 } = require("../produk/mobile-legends");
+const { listPubg } = require("../produk/pubg")
 // end code
 
 
@@ -1398,6 +1400,38 @@ case "updatelayanan" : {
       }
       break;
 
+      case 'getml': {
+        let priceml = text.split (" ")[0];
+        if (!priceml) return reply(`${prefix + command} masukan rate\n`);
+        let listratemla = "*── 「 LIST DIAMOND ML A/C 」 ──*\n\n";
+        // Menambahkan setiap item ke dalam listrateml
+        for (const key in list1000().mla) {
+          if (Object.hasOwnProperty.call(list1000().mla, key)) {
+            const itema = list1000().mla[key];
+            const hargaBarua = Math.ceil(itema.harga * priceml).toLocaleString();
+            listratemla += `${itema.produk} : Rp ${hargaBarua}\n`;
+          }
+        }
+        m.reply(listratemla);
+      }
+      break;
+
+      case 'getpubg': {
+        let pricePubg = text.split (" ")[0];
+        if (!pricePubg) return reply(`${prefix + command} masukan rate\n`);
+        let listRatePubg = "*── 「 LIST UC PUBG INDO 」 ──*\n\n";
+        // Menambahkan setiap item ke dalam listrateml
+        for (const key in listPubg().pubg) {
+          if (Object.hasOwnProperty.call(listPubg().pubg, key)) {
+            const itemPubg = listPubg().pubg[key];
+            const hargaPubg = Math.ceil(itemPubg.harga * pricePubg).toLocaleString();
+            listRatePubg += `${itemPubg.produk} : Rp ${hargaPubg}\n`;
+          }
+        }
+        m.reply(listRatePubg);
+      }
+      break;
+
       case "topupdigi" : case "digi" : case "alltopup" : {
         if (!isCreator) throw mess.owner
         let skc = text.split("|")[0]
@@ -1467,38 +1501,23 @@ case "updatelayanan" : {
       // setting list
       case "store":
         case "list": {
-            if (!isGroup) return m.reply(mess.group);
-            if (db_respon_list.length === 0) return m.reply('```Belum Ada List```');
-            if (!isAlreadyResponListGroup(from, db_respon_list)) return m.reply('```Belum Ada List Terdaftar Di Group Ini```');
+          if (!isGroup) return m.reply(mess.group);
+          if (db_respon_list.length === 0) return m.reply('```Belum Ada List```');
+          if (!isAlreadyResponListGroup(from, db_respon_list)) return m.reply('```Belum Ada List Terdaftar Di Group Ini```');
         
-            var arr_rows = [];
-            for (let x of db_respon_list) {
-                if (x.id == from) {
-                    arr_rows.push({
-                        title: x.key,
-                        rowId: x.key
-                    });
-                }
+          // Mengonversi daftar respons menjadi pesan tanpa format khusus
+          var message = `Hi Kak *${pushname ? pushname : "Anon"}*\n\n🛒 _List From ${groupName}_\n📅 ${tglserver}\n🕰️ ${wktserver}\n\n`;
+          db_respon_list.forEach(item => {
+            if (item.id === from) {
+              message += `⭔ ${item.key}\n`;
             }
+          });
+          message += "\n*Catatan :* \n_Untuk melihat detail produk, silahkan_\n_kirim nama produk yang ada pada list_\n_di atas. Misalnya kamu ingin melihat_\n_detail produk dari *PUBG*, maka kirim_\n_pesan *PUBG* kepada bot_ \n";
         
-            var listMsg = {
-                text: `Hi Kak ${pushname ? pushname : "Anon"}`,
-                footer: `_List From ${groupName}_`,
-                mentions: [sender],
-                sections: [{
-                    title: groupName,
-                    rows: arr_rows
-                }]
-            };
-        
-            farhat.sendMessage(from, listMsg)
-                .catch(error => {
-                    console.error('Error sending message:', error);
-                    m.reply('```Gagal mengirim pesan, silakan coba lagi nanti```');
-                });
+          // Mengirim pesan dengan membalas pesan pengirim
+          farhat.sendMessage(from, { text: message }, { quoted: m });
         }
-        break;
-        
+        break;        
 
   case "addlist" : {
     if (!isGroup) return m.reply(mess.group)
@@ -1538,6 +1557,7 @@ case "updatelayanan" : {
     m.reply(`*_Berhasil Update List ${text1}_*`)
   }
       break;
+      
       case 'restart' : {
       if (!isCreator) return m.reply(mess.owner)
       await m.reply(`_Restarting ${packname}_`)
